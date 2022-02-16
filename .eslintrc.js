@@ -16,5 +16,6 @@ module.exports = {
   ignorePatterns: ['.eslintrc.js'], // https://stackoverflow.com/questions/63002127/parsing-error-parseroptions-project-has-been-set-for-typescript-eslint-parser
   rules: {
     '@typescript-eslint/no-unused-vars': WARNING,
+    'no-prototype-builtins': WARNING,
   },
 };

@@ -1,0 +1,30 @@
+{
+  "inputConfig": {
+    "dirPath": "./files/input"
+  },
+  "parseConfig": {
+    "skipLines": 15,
+    "headers": [
+      "date",
+      null,
+      "purposeCode",
+      null,
+      "payee",
+      null,
+      "payeeIBAN",
+      "payeeBLZ",
+      "payeeBIC",
+      "operation",
+      null,
+      "currency",
+      "revenue",
+      "depitCredit"
+    ]
+  },
+  "outputConfig": {
+    "path": "./files/output",
+    "fileName": "parsedStuff.csv",
+    "requiredColumns": ["purposeCode"],
+    "addId": true
+  }
+}
