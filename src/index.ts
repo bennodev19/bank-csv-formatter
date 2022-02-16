@@ -12,7 +12,7 @@ const outputConfig = {
   ...config.outputConfig,
 };
 
-const start = async (): Promise<void> => {
+async function start(): Promise<void> {
   console.log('Loaded Config ', config);
 
   // When specifying custom headers the header row needs to be removed too
@@ -43,8 +43,12 @@ const start = async (): Promise<void> => {
         )
       ) {
         // Note: Merging to have the id at the first pos of the object (good when export to csv file)
-        if (outputConfig.addId) row = { id: currentId++, ...row };
+        if (outputConfig.addId) row = { id: `id${currentId++}`, ...row };
 
+        // Format row (e.g. add tag, ..)
+        row = format(row);
+
+        // Add formatted row to the final merged row array
         mergedRows.push(row);
       }
     }
@@ -52,7 +56,14 @@ const start = async (): Promise<void> => {
 
   // Write merged rows to a new csv file
   await writeCSV(outputConfig.fileName, outputConfig.path, mergedRows);
-};
+}
+
+async function format(value: {
+  [p: string]: any;
+}): Promise<{ [p: string]: any }> {
+  // TODO add tagging
+  return {};
+}
 
 console.log('Info: Start Program');
 start().then(() => {
