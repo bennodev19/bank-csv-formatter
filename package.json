@@ -1,0 +1,46 @@
+{
+  "name": "bank-csv-formatter",
+  "version": "0.0.1",
+  "description": "Format .csv file from bank to a more usable .csv file",
+  "main": "index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "shx rm -rf dist && tsc -p .",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon src/index.ts",
+    "prettier": "prettier --config .prettierrc --write \"**/*.{js,ts}\"",
+    "lint": "eslint --cache \"**/*.{js,ts}\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bennodev19/pdf-signer.git"
+  },
+  "author": "@bennodev19",
+  "license": "MIT",
+  "dependencies": {
+    "csv": "^6.0.5"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.18",
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1",
+    "shx": "^0.3.4",
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "dist",
+    "LICENSE",
+    "README.md"
+  ]
+}
