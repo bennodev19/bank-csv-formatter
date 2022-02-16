@@ -36,7 +36,7 @@ async function start(): Promise<void> {
   for (const key of Object.keys(parsedData)) {
     const data = parsedData[key];
     for (let row of data) {
-      // Check that all required columns aren't empty in the rows
+      // Check that all required columns are set
       if (
         outputConfig.requiredColumns.every(
           (item) => row[item] != null && row[item] !== '',
@@ -46,10 +46,10 @@ async function start(): Promise<void> {
         if (outputConfig.addId) row = { id: `id${currentId++}`, ...row };
 
         // Format row (e.g. add tag, ..)
-        row = format(row);
+        const formattedRow = await formatRow(row);
 
         // Add formatted row to the final merged row array
-        mergedRows.push(row);
+        mergedRows.push(formattedRow);
       }
     }
   }
@@ -58,11 +58,56 @@ async function start(): Promise<void> {
   await writeCSV(outputConfig.fileName, outputConfig.path, mergedRows);
 }
 
-async function format(value: {
+async function formatRow(value: {
   [p: string]: any;
 }): Promise<{ [p: string]: any }> {
-  // TODO add tagging
-  return {};
+  // Add Payee Tag
+  const payee = value['payee'] as string;
+  if (payee != null) {
+    let tag = 'unknown';
+
+    // Amazon
+    if (payee.toUpperCase().includes('AMAZON')) {
+      tag = 'amazon';
+    }
+
+    // Media Markt
+    if (payee.toUpperCase().includes('MEDIA MARKT')) {
+      tag = 'media markt';
+    }
+
+    // Trade Republic
+    if (payee.toUpperCase().includes('TRADEREPUBLIC')) {
+      tag = 'trade republic';
+    }
+
+    // Paypal
+    if (payee.toUpperCase().includes('PAYPAL')) {
+      tag = 'paypal';
+    }
+
+    // Checkdomain
+    if (payee.toUpperCase().includes('CHECKDOMAIN')) {
+      tag = 'check domain';
+    }
+
+    // Dan Domain Transfer
+    if (payee.toUpperCase().includes('DAN DOMAIN TRANSFER')) {
+      tag = 'dan domain transfer';
+    }
+
+    // Public Transport
+    if (
+      payee.toUpperCase().includes('VAG') ||
+      payee.toUpperCase().includes('DB')
+    ) {
+      tag = 'public transport';
+    }
+
+    value['tag'] = tag;
+  }
+
+  return value;
 }
 
 console.log('Info: Start Program');
